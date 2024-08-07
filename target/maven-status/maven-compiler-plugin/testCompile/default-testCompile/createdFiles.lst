@@ -1,0 +1,8 @@
+share/mock/repository/UserRepositoryMock.class
+share/mock/service/UserServiceMock.class
+com/app/interfaces/controller/UserControllerTest.class
+share/mock/service/AuthServiceMock.class
+com/app/application/service/encryption/RSAServiceTest.class
+share/mock/service/JwtServiceMock.class
+share/mock/service/RSAServiceMock.class
+com/app/application/service/jwt/JwtServiceTest.class
