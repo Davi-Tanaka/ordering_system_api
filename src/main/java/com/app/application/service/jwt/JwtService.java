@@ -14,21 +14,29 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class JwtService {
     @Autowired
-    private RSAService rsaService;
-
-    @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    @Qualifier("rsa_private_key")
+    private RSAPrivateKey rsaPrivateKey;
+    
+    @Autowired
+    @Qualifier("rsa_public_key")
+    private RSAPublicKey rsaPublicKey;
     
     /**
      * The algorithm that JwtService will use to sign tokens.
@@ -58,11 +66,11 @@ public class JwtService {
         .withDefaultPrettyPrinter();
 
     public JwtService()  {}
-    
+
     @PostConstruct
     public void injectDeps() {
         try {
-            this.algorithm = Algorithm.RSA256(rsaService.getPublicKey(), rsaService.getPrivateKey());
+            this.algorithm = Algorithm.RSA256(rsaPublicKey, rsaPrivateKey);
             this.verifier = JWT.require(this.algorithm).build();
         } catch (Exception err) {
             err.printStackTrace();
@@ -72,12 +80,6 @@ public class JwtService {
     public JwtService setAlgorithm(Algorithm algorithm) {
         this.algorithm = algorithm;        
         this.verifier = JWT.require(this.algorithm).build();
-        
-        return this;
-    }
-
-    public JwtService setRsaService(RSAService rsaService) {
-        this.rsaService = rsaService;
         
         return this;
     }

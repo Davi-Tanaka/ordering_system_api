@@ -1,4 +1,4 @@
-package com.app.application.service.auth;
+package com.app.exceptions;
 
 /**
  *

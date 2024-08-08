@@ -1,8 +1,8 @@
 package com.app.domain.database.repository;
 
 import com.app.domain.database.entity.OrderEntity;
-import com.app.domain.database.queryResponse.order.FindByCompanyQueryResponse;
-import com.app.domain.database.queryResponse.order.FindByUserQueryResponse;
+import com.app.domain.database.queryResponse.order.FindOrderByCompanyQueryResponse;
+import com.app.domain.database.queryResponse.order.FindOrderByUserQueryResponse;
 import com.app.interfaces.dto.order.CancelOrderDto;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,14 +16,14 @@ public interface OderRepository extends JpaRepository<OrderEntity, Long> {
                 "order_entity WHERE user_id WHERE user_id = ?1",
         nativeQuery = true
     )
-    public Optional<FindByUserQueryResponse> findByUser(Long userId);
+    public Optional<FindOrderByUserQueryResponse> findByUser(Long userId);
 
     @Query(
         value = "SELECT id, user_id, product_id, quantity, status. created_at, updated_at FROM order_entity " +
                 "WHERE company_id WHERE company_id = ?1",
         nativeQuery = true
     )
-    public Optional<FindByCompanyQueryResponse> findByCompany(Long companyId);
+    public Optional<FindOrderByCompanyQueryResponse> findByCompany(Long companyId);
     
     @Query(
         value = "UPDATE status FROM order_entity " + 

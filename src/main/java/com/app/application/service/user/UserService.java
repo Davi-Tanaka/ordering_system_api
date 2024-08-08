@@ -1,4 +1,4 @@
-package com.app.application.service;
+package com.app.application.service.user;
 
 import com.app.application.business.UserBusiness;
 import com.app.application.service.model.IResponseModel;
@@ -6,6 +6,7 @@ import com.app.application.service.model.ResponseModel;
 import com.app.domain.database.entity.user.UserEntity;
 import com.app.domain.database.entity.user.UserImagesEntity;
 import com.app.domain.database.repository.UserRepository;
+import com.app.exceptions.RecordNotFoundInDatabase;
 import com.app.interfaces.dto.user.CreateUserRequestDto;
 import com.app.interfaces.dto.user.CreateUserResponseDto;
 import java.sql.SQLException;
@@ -29,11 +30,11 @@ public class UserService implements IUserService {
     
     @Transactional
     @Override
-    public UserEntity findById(Long id) throws NotFoundException {
+    public UserEntity findById(Long id) throws RecordNotFoundInDatabase {
         Optional<UserEntity> result = this.userRepository.findById(id);
         
         if(result.isEmpty()) {
-            throw new NotFoundException();
+            throw new RecordNotFoundInDatabase();
         };
         
         return result.get();
@@ -81,7 +82,7 @@ public class UserService implements IUserService {
     
     @Transactional
     @Override
-    public void delete(Long id) throws NotFoundException {
+    public void delete(Long id) {
         this.userRepository.deleteById(id);
     }
     
@@ -98,20 +99,14 @@ public class UserService implements IUserService {
     }
     
     @Override
-    public UserEntity findByEmailAndPassword(String email, String pswd) throws NotFoundException {
-        System.out.println("------- --------------- ---------\n");
-        System.out.format("Hashed password -> %s \n", UserBusiness.hashPassword(pswd));
-                
+    public UserEntity findByEmailAndPassword(String email, String pswd) throws RecordNotFoundInDatabase {                
         Optional<UserEntity> response = userRepository.findByEmailAndPassword(
             email, 
             UserBusiness.hashPassword(pswd)
         );
-        
-        System.out.println("------- --------------- ---------\n");
-        System.out.format("Respose email and pswd -> %s; %s\n", response.get().getEmail(), response.get().getPassword());
-        
+                
         if(!response.isPresent()) {
-            throw new NotFoundException();
+            throw new RecordNotFoundInDatabase();
         }
         
         return response.get();
@@ -133,11 +128,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserEntity findByEmail(String email) throws NotFoundException {
+    public UserEntity findByEmail(String email) throws RecordNotFoundInDatabase {
         Optional<UserEntity> user = userRepository.findByEmail(email);
         
         if(!user.isPresent()) {
-            throw new NotFoundException();
+            throw new RecordNotFoundInDatabase();
         }
         
         return user.get();

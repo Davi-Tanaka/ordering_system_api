@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class FindByUserQueryResponse {
+public class FindOrderByUserQueryResponse {
     private Long id;    
     private CompanyEntity companyEntity;
     private ProductEntity product;

@@ -1,5 +1,6 @@
 package com.app.application.service.auth;
 
+import com.app.exceptions.UnauthorizedAuthenticationException;
 import com.app.domain.database.entity.user.UserEntity;
 
 public interface IAuth {

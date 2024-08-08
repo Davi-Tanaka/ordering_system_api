@@ -83,10 +83,6 @@ public interface IUserController {
                 schema = @Schema(implementation = DeleteDataDto.class),
                 mediaType = "application/json"
             )
-        ),
-        @ApiResponse(
-                responseCode = "401",
-                description = "Not Found"
         )
     })
     public ResponseEntity delete(JwtAcessTokenPayloadDto tokenObject);

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class FindByCompanyQueryResponse {
+public class FindOrderByCompanyQueryResponse {
     
     private Long id;
     private UserEntity user;
@@ -17,5 +17,4 @@ public class FindByCompanyQueryResponse {
     private OrderStatusEnum status = OrderStatusEnum.PAID;
     private Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
     private Timestamp updatedAt = Timestamp.valueOf(LocalDateTime.now());
-
 }

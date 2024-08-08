@@ -9,20 +9,24 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import share.mock.service.RSAServiceMock;
 
+@PropertySource("classpath:application.properties")
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RSAServiceTest {
 
+    @Autowired
+    RSAService rsaService;
+    
     private static String data_to_encrypt = "Hello World. Lorem Ipsulum Go Go Ha Ha !";
     private static String encrypted_data;
-    private static RSAService rsaService = RSAServiceMock.getMock();
         
     @Test
     @Order(1)

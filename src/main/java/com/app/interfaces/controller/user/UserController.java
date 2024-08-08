@@ -1,6 +1,6 @@
 package com.app.interfaces.controller.user;
 
-import com.app.application.service.UserService;
+import com.app.application.service.user.UserService;
 import com.app.application.service.auth.AuthService;
 import com.app.application.service.jwt.JwtService;
 import com.app.application.service.jwt.JwtTokens;
@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,9 +61,7 @@ public class UserController implements IUserController {
             new ModelMapper().map(body, UserEntity.class)
         );
 
-        if(userCanSignup.hasError()) {   
-            userCanSignup.getError().printStackTrace();
-            
+        if(userCanSignup.hasError()) {               
             return ResponseEntity.status(HttpStatus.CONFLICT).body(
                 userCanSignup.getError().getMessage()
             );
@@ -104,11 +101,7 @@ public class UserController implements IUserController {
     public ResponseEntity delete(
             @GetAuthorizationTokenObject JwtAcessTokenPayloadDto tokenObject
     ) {
-        try {
-            this.userService.delete(tokenObject.getId());
-            return new ResponseEntity(HttpStatus.OK);
-        } catch (NotFoundException error) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
+        this.userService.delete(tokenObject.getId());
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

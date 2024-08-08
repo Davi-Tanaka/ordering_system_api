@@ -1,11 +1,11 @@
-package com.app.application.service;
+package com.app.application.service.user;
 
 import com.app.domain.database.entity.user.UserEntity;
 import com.app.domain.database.entity.user.UserImagesEntity;
+import com.app.exceptions.RecordNotFoundInDatabase;
 import com.app.interfaces.dto.user.CreateUserRequestDto;
 import com.app.interfaces.dto.user.CreateUserResponseDto;
 import java.sql.SQLException;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 public interface IUserService {
     public CreateUserResponseDto create(CreateUserRequestDto dto) throws SQLException;
@@ -18,8 +18,8 @@ public interface IUserService {
     public boolean nameExist(String name);
     public boolean cpfExist(String cpf);
     
-    public void delete(Long userId) throws NotFoundException;
-    public UserEntity findById(Long userId) throws NotFoundException;
-    public UserEntity findByEmailAndPassword(String email, String pswd) throws NotFoundException;
-    public UserEntity findByEmail(String email) throws NotFoundException;
+    public void delete(Long userId) throws RecordNotFoundInDatabase;
+    public UserEntity findById(Long userId) throws RecordNotFoundInDatabase;
+    public UserEntity findByEmailAndPassword(String email, String pswd) throws RecordNotFoundInDatabase;
+    public UserEntity findByEmail(String email) throws RecordNotFoundInDatabase;
 }
