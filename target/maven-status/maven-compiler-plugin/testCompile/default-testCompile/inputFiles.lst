@@ -1,8 +1,0 @@
-/home/davi/Desktop/codigo/java/ordering_system/src/test/java/com/app/application/service/encryption/RSAServiceTest.java
-/home/davi/Desktop/codigo/java/ordering_system/src/test/java/com/app/application/service/jwt/JwtServiceTest.java
-/home/davi/Desktop/codigo/java/ordering_system/src/test/java/com/app/interfaces/controller/UserControllerTest.java
-/home/davi/Desktop/codigo/java/ordering_system/src/test/java/share/mock/repository/UserRepositoryMock.java
-/home/davi/Desktop/codigo/java/ordering_system/src/test/java/share/mock/service/AuthServiceMock.java
-/home/davi/Desktop/codigo/java/ordering_system/src/test/java/share/mock/service/JwtServiceMock.java
-/home/davi/Desktop/codigo/java/ordering_system/src/test/java/share/mock/service/RSAServiceMock.java
-/home/davi/Desktop/codigo/java/ordering_system/src/test/java/share/mock/service/UserServiceMock.java
