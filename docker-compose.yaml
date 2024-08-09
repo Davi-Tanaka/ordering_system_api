@@ -8,9 +8,9 @@ services:
     container_name: ordering_system.mysql
     restart: always
     environment:
-      - MYSQL_USER:${MYSQL_USER}
-      - MYSQL_DATABASE:${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD:${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
     ports:
       - ${MYSQL_PORT}:${MYSQL_PORT}
@@ -39,12 +39,12 @@ services:
     command: "/sh/aws/s3.init.sh"
 
     environment:
-      - AWS_ACCESS_KEY_ID:${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY:${AWS_SECRET_ACCESS_KEY}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
 
-      - S3_PRODUCT_IMAGE_BUCKET:${S3_PRODUCT_IMAGE_BUCKET}
-      - S3_USER_IMAGE_BUCKET:${S3_USER_IMAGE_BUCKET}
-      - S3_REGION:${S3_REGION}
+      - S3_PRODUCT_IMAGE_BUCKET=${S3_PRODUCT_IMAGE_BUCKET}
+      - S3_USER_IMAGE_BUCKET=${S3_USER_IMAGE_BUCKET}
+      - S3_REGION=${S3_REGION}
 
     volumes:
       - ./sh/aws/:/sh/aws/
