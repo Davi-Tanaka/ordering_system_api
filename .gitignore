@@ -1,4 +1,8 @@
 /target
-/.settings
-/nbactions.xml
-/nb-configuration
+/nb-configuration.xml
+/nb-configuration.xml
+/launch.json
+.settings
+.vscode
+nb-configuration.xml
+nbactions.xml

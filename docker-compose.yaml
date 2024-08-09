@@ -1,0 +1,56 @@
+networks:
+  ordering_system.network:
+    name: ordering_system.network
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ordering_system.mysql
+    restart: always
+    environment:
+      - MYSQL_USER:${MYSQL_USER}
+      - MYSQL_DATABASE:${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD:${MYSQL_ROOT_PASSWORD}
+
+    ports:
+      - ${MYSQL_PORT}:${MYSQL_PORT}
+
+    networks:
+      - ordering_system.network
+
+  localstack:
+    container_name: ordering_system.localstack
+    hostname: localstack
+    image: localstack/localstack
+    ports:
+      - ${LOCALSTACK_PORT}:${LOCALSTACK_PORT}
+
+    environment:
+      - SERVICES:s3
+
+    networks:
+      - ordering_system.network
+
+  aws-cli:
+    container_name: ordering_system.aws_cli
+    image: amazon/aws-cli
+
+    entrypoint: /bin/sh -c
+    command: "/sh/aws/s3.init.sh"
+
+    environment:
+      - AWS_ACCESS_KEY_ID:${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY:${AWS_SECRET_ACCESS_KEY}
+
+      - S3_PRODUCT_IMAGE_BUCKET:${S3_PRODUCT_IMAGE_BUCKET}
+      - S3_USER_IMAGE_BUCKET:${S3_USER_IMAGE_BUCKET}
+      - S3_REGION:${S3_REGION}
+
+    volumes:
+      - ./sh/aws/:/sh/aws/
+
+    networks:
+      - ordering_system.network
+
+    depends_on:
+      - localstack
