@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @Setter
 @Getter
@@ -103,5 +104,5 @@ public class UserController implements IUserController {
     ) {
         this.userService.delete(tokenObject.getId());
         return new ResponseEntity(HttpStatus.OK);
-    }
+    }    
 }

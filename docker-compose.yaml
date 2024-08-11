@@ -1,0 +1,63 @@
+networks:
+  ordering_system.network:
+    name: ordering_system.network
+
+services:
+  mysql:
+    image: mysql:8.0-oracle
+    container_name: ordering_system.mysql
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+
+    ports:
+      - ${MYSQL_PORT}:3306
+
+    networks:
+      - ordering_system.network
+
+  s3:
+    container_name: ordering_system.s3
+    hostname: localstack
+    image: localstack/localstack:s3-latest
+    ports:
+      - ${LOCALSTACK_PORT}:${LOCALSTACK_PORT}
+
+    environment:
+      - SERVICES:s3
+
+    networks:
+      - ordering_system.network
+            
+    healthcheck:
+      test: curl --fail http://localhost:4566 || exit 1
+      interval: 20s
+      retries: 10
+      start_period: 5s
+      timeout: 1s
+      
+  aws-cli:
+    container_name: ordering_system.aws_cli
+    image: amazon/aws-cli
+
+    entrypoint: ["/bin/sh", "-c"]
+    command: "/sh/aws/s3.init.sh"
+
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+
+      - S3_PRODUCT_IMAGE_BUCKET=${S3_PRODUCT_IMAGE_BUCKET}
+      - S3_USER_IMAGE_BUCKET=${S3_USER_IMAGE_BUCKET}
+      - S3_REGION=${S3_REGION}
+      
+    volumes:
+      - ./sh/aws/:/sh/aws/
+
+    networks:
+      - ordering_system.network
+
+    depends_on:
+      s3:
+        condition: service_healthy
