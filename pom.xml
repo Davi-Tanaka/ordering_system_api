@@ -15,11 +15,9 @@
     </parent>
     
     <properties>
+        <exec.mainClass>com.app.Main</exec.mainClass>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        
-        <exec.mainClass>com.app.Main</exec.mainClass>
-
         <aws.java.sdk.version>2.26.25</aws.java.sdk.version>
     </properties>
    
@@ -55,6 +53,16 @@
             <version>0.4.0</version>
         </dependency>
         
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-docker-compose</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

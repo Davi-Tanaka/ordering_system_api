@@ -1,8 +1,6 @@
-/target
-/nb-configuration.xml
-/nb-configuration.xml
-/launch.json
+target/
+nb-configuration.xml
+launch.json
 .settings
 .vscode
-nb-configuration.xml
 nbactions.xml

@@ -1,5 +1,6 @@
 package com.app.config.amazon;
 
+import jakarta.annotation.PostConstruct;
 import java.net.URI;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -39,21 +40,26 @@ public class S3Config {
                     AwsBasicCredentials.create(ACCESS_KEY_ID, SECRET_ACCESS_KEY)
                 ))
                 .httpClient(ApacheHttpClient.create())
+                .forcePathStyle(Boolean.TRUE)
                 .endpointOverride(new URI(ENDPOINT))
                 .region(Region.of(REGION))
                 .build();
-
+            
         } catch (Exception err) {
             err.printStackTrace();
             return null;
         }        
     }
     
-    public String getUserImageBucket() {
+    public String getUserImageBucketName() {
         return USER_IMAGE_BUCKET;
     }
     
-    public String getProductImageBucket() {
+    public String getProductImageBucketName() {
         return PRODUCT_IMAGE_BUCKET;
+    }
+    
+    public String getRegion() {
+        return this.REGION;
     }
 }
